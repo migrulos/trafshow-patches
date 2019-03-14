@@ -9,3 +9,6 @@ With this patch you can disable aggregate at all by using the '-A' flag.
 ### sort_by_rate.patch
 
 By default trafshow-5.2.3 sorts flows by Size/Data/Packets. With this patch trafshow will sort flows by CPS/PPS. 
+
+
+##### PS: Add patched binary file.
