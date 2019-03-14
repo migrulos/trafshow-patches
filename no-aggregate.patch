@@ -1,0 +1,55 @@
+diff --git a/trafshow.c b/trafshow.c
+index ca8f676..b040725 100644
+--- a/trafshow.c
++++ b/trafshow.c
+@@ -75,7 +75,7 @@ const char *hostname;
+ const char *color_conf = 0;
+ char *expression = 0;
+ char *search = 0;
+-int aggregate = -1;
++int aggregate = -2;
+ int popbackflow = 0;
+ int refresh_time = REFRESH_TIME;
+ int purge_time = PURGE_TIME;
+@@ -112,13 +112,16 @@ main(argc, argv)
+ 	}
+ 
+ 	opterr = 0;
+-	while ((op = getopt(argc, argv, "a:bc:i:ns:u:pF:R:P:vh?")) != EOF) {
++	while ((op = getopt(argc, argv, "a:Abc:i:ns:u:pF:R:P:vh?")) != EOF) {
+ 		switch (op) {
+ 		case 'a':
+ 			aggregate = atoi(optarg);
+ 			if (aggregate < 0 || aggregate > ADDRBITLEN)
+ 				usage();
+ 			break;
++		case 'A':
++			aggregate = -1;
++			break;
+ 		case 'b':
+ 			popbackflow = 1;
+ 			break;
+@@ -625,7 +628,7 @@ pcap_save(ph, ns)
+ 	/* sanity check */
+ 	if (!ph || !ns) return;
+ 
+-	if (netstat_insert(ph, ns) && aggregate < 0) {
++	if (netstat_insert(ph, ns) && aggregate < -1) {
+ 		num = netstat_count(ph);
+ 		if (num > 5000) {
+ 			if (ph->masklen)
+@@ -855,12 +858,13 @@ usage()
+ {
+ 	fprintf(stderr,
+ "Usage:\n\
+- %s [-vpnb] [-a len] [-c conf] [-i ifname] [-s str] [-u port] [-R refresh] [-P purge] [-F file | expr]\n\
++ %s [-vpnbA] [-a len] [-c conf] [-i ifname] [-s str] [-u port] [-R refresh] [-P purge] [-F file | expr]\n\
+ Where:\n\
+  -v         Print version number, compile-time definitions, and exit\n\
+  -p         Don't put the interface(s) into promiscuous mode\n\
+  -n         Don't convert numeric values to names\n\
+  -b         To place a backflow near to the main stream\n\
++ -A	    Don`t use aggregate at all, neither manual nor auto-aggregate\n\
+  -a len     To aggregate IP addresses using the prefix length\n\
+  -c conf    Color config file instead of default /etc/trafshow\n\
+  -i ifname  Network interface name; all by default\n\

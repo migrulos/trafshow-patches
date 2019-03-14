@@ -1,0 +1,37 @@
+diff --git a/show_stat.c b/show_stat.c
+index 1f8db47..faf3bae 100644
+--- a/show_stat.c
++++ b/show_stat.c
+@@ -46,8 +46,8 @@ static int
+ compare_pkt_len(p1, p2)
+ 	register const NETSTAT **p1, **p2;
+ {
+-	if ((*p1)->pkt_len > (*p2)->pkt_len) return -1;
+-	if ((*p1)->pkt_len < (*p2)->pkt_len) return 1;
++	if ((*p1)->pkt_len_rate > (*p2)->pkt_len_rate) return -1;
++	if ((*p1)->pkt_len_rate < (*p2)->pkt_len_rate) return 1;
+ 	return 0;
+ }
+ 
+@@ -55,8 +55,8 @@ static int
+ compare_data_len(p1, p2)
+ 	register const NETSTAT **p1, **p2;
+ {
+-	if ((*p1)->data_len > (*p2)->data_len) return -1;
+-	if ((*p1)->data_len < (*p2)->data_len) return 1;
++	if ((*p1)->data_len_rate > (*p2)->data_len_rate) return -1;
++	if ((*p1)->data_len_rate < (*p2)->data_len_rate) return 1;
+ 	return 0;
+ }
+ 
+@@ -64,8 +64,8 @@ static int
+ compare_pkt_cnt(p1, p2)
+ 	register const NETSTAT **p1, **p2;
+ {
+-	if ((*p1)->pkt_cnt > (*p2)->pkt_cnt) return -1;
+-	if ((*p1)->pkt_cnt < (*p2)->pkt_cnt) return 1;
++	if ((*p1)->pkt_cnt_rate > (*p2)->pkt_cnt_rate) return -1;
++	if ((*p1)->pkt_cnt_rate < (*p2)->pkt_cnt_rate) return 1;
+ 	return 0;
+ }
+ 
